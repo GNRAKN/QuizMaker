@@ -22,7 +22,7 @@ import org.jboss.logging.Logger;
 @Table(name = "SINAV")
 public class Sinav {
 
-	private static final Logger logger = Logger.getLogger(Klasik.class);
+	private static final Logger logger = Logger.getLogger(Soru.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +38,11 @@ public class Sinav {
 	private String sinav_gozetmenAdi;
 
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinTable(name = "Sinav_Klasik", joinColumns = { @JoinColumn(name = "Sinav_Id") }, inverseJoinColumns = {
-			@JoinColumn(name = "Klasik_Id") })
-	@MapKey(name = "k_id") // bunu kullanmazsak cokacok iliskiden dogan tabloya HashMap key'ini insert
+	@JoinTable(name = "Sinav_Soru", joinColumns = { @JoinColumn(name = "Sinav_Id") }, inverseJoinColumns = {
+			@JoinColumn(name = "Soru_Id") })
+	@MapKey(name = "soru_id") // bunu kullanmazsak cokacok iliskiden dogan tabloya HashMap key'ini insert
 							// ediyor.
-	private Map<Long, Klasik> klasikSorular = new HashMap<Long, Klasik>();
+	private Map<Long, Soru> sorular = new HashMap<Long, Soru>();
 
 	public Sinav() {
 
@@ -50,13 +50,13 @@ public class Sinav {
 	}
 
 	public Sinav(String sinav_adi, Kategori kategori, String sinav_yeri, String sinav_gozetmenAdi,
-			Map<Long, Klasik> klasikSorular) {
-
+			Map<Long, Soru> sorular) {
+	
 		this.sinav_adi = sinav_adi;
 		this.kategori = kategori;
 		this.sinav_yeri = sinav_yeri;
 		this.sinav_gozetmenAdi = sinav_gozetmenAdi;
-		this.klasikSorular = klasikSorular;
+		this.sorular = sorular;
 	}
 
 	public long getSinav_id() {
@@ -79,8 +79,8 @@ public class Sinav {
 		return sinav_gozetmenAdi;
 	}
 
-	public Map<Long, Klasik> getKlasikSorular() {
-		return klasikSorular;
+	public Map<Long, Soru> getSorular() {
+		return sorular;
 	}
 
 	public void setSinav_id(long sinav_id) {
@@ -103,8 +103,11 @@ public class Sinav {
 		this.sinav_gozetmenAdi = sinav_gozetmenAdi;
 	}
 
-	public void setKlasikSorular(Map<Long, Klasik> klasikSorular) {
-		this.klasikSorular = klasikSorular;
+	public void setSorular(Map<Long, Soru> sorular) {
+		this.sorular = sorular;
 	}
+
+	
+	
 
 }

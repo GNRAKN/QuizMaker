@@ -1,10 +1,10 @@
 package com.gunerakin.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.gunerakin.model.Kategori;
-import com.gunerakin.model.Klasik;
 import com.gunerakin.model.Sinav;
+import com.gunerakin.model.Soru;
 import com.gunerakin.repository.service.KategoriService;
-import com.gunerakin.repository.service.KlasikService;
+import com.gunerakin.repository.service.SoruService;
 
 @Controller
 public class SoruBankasiController {
@@ -25,129 +25,128 @@ public class SoruBankasiController {
 	private static final Logger logger = LoggerFactory.getLogger(SoruBankasiController.class);
 
 	@Inject
-	KlasikService k_Service;
+	SoruService soru_Service;
 
 	@Inject
 	KategoriService kategori_Service;
 
-	@RequestMapping(value = "yeniKlasik", method = RequestMethod.GET)
-	public ModelAndView yeniKlasik(@ModelAttribute Klasik klasik) {
+	@RequestMapping(value = "yeniSoru", method = RequestMethod.GET)
+	public ModelAndView yeniSoru(@ModelAttribute Soru soru) {
 
 		List<Kategori> kategoriler = kategori_Service.kategoriListele();
 
-		return new ModelAndView("klasikForm", "kategoriler", kategoriler);
+		return new ModelAndView("soruForm", "kategoriler", kategoriler);
 
 	}
 
-	@RequestMapping(value = "kaydetKlasik", method = RequestMethod.POST)
-	public ModelAndView kaydetKlasik(@ModelAttribute Klasik klasik, @RequestParam("kategori") Long kategori) {
+	@RequestMapping(value = "kaydetSoru", method = RequestMethod.POST)
+	public ModelAndView kaydetSoru(@ModelAttribute Soru soru, @RequestParam("kategori") Long kategori) {
 
-		System.out.println(klasik.getK_soru());
-		if (klasik.getK_id() == 0) {
+		if (soru.getSoru_id() == 0) {
 
-			klasik.getKategori().setKategori_id(kategori);
-			k_Service.ekleKlasikSoru(klasik);
-			System.out.println(klasik.getK_soru());
+			soru.getKategori().setKategori_id(kategori);
+			soru_Service.ekleSoru(soru);
 			logger.info("Yeni kayit veritabanina eklendi.");
 
 		} else {
-			klasik.getKategori().setKategori_id(kategori);
-			k_Service.guncelleKlasikSoru(klasik);
-			logger.info(klasik.getK_id() + " id degerine sahip kayit guncellendi.");
+			soru.getKategori().setKategori_id(kategori);
+			soru_Service.guncelleSoru(soru);
+			logger.info(soru.getSoru_id() + " id degerine sahip kayit guncellendi.");
 		}
-		return new ModelAndView("redirect:listeleKlasik");
+		return new ModelAndView("redirect:listeleSoru");
 	}
 
-	@RequestMapping(value = "listeleKlasik", method = RequestMethod.GET)
-	public ModelAndView listeleKlasik(ModelAndView model, HttpSession session) {
+	@RequestMapping(value = "listeleSoru", method = RequestMethod.GET)
+	public ModelAndView listeleSoru(ModelAndView model, HttpSession session) {
 
-		List<Klasik> klasikSorular = k_Service.listeleKlasikSorular();
-		HashSet<Kategori> kategoriler = new HashSet<Kategori>();
-		for (Klasik klasik : klasikSorular) {
+		List<Soru> sorular ;
+		if(session.getAttribute("sinav")==null) {
+			
+			sorular= soru_Service.listeleSorular();
+			HashSet<Kategori> kategoriler = new HashSet<Kategori>();
+			for (Soru soru : sorular) {
 
-			kategoriler.add(klasik.getKategori());
-		}
-		if (session.getAttribute("sinav") != null) {
-			Sinav sinav = (Sinav) session.getAttribute("sinav");
-			klasikSorular = k_Service.listeleKlasikByKategori(sinav.getKategori().getKategori_id());
-			logger.info(sinav.getKategori().getKategori_ad() + " kategorindeki klasik sorular listelendi.");
-
-			return new ModelAndView("formListele", "klasikSorular", klasikSorular).addObject("kategoriler", kategoriler)
-					.addObject("soruSayisi", sinav.getKlasikSorular().size());
-		}
-
-		else {
-			return new ModelAndView("formListele", "klasikSorular", klasikSorular).addObject("kategoriler",
+				kategoriler.add(soru.getKategori());
+			}
+			
+			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler",
 					kategoriler);
 		}
-	}
-	
-	
-	
-	@RequestMapping(value = "listeleKlasik", method = RequestMethod.POST)
-	public ModelAndView listeleKlasik(@ModelAttribute Klasik kriterler, HttpSession session) {
+		
+		else {
+			Sinav sinav = (Sinav) session.getAttribute("sinav");
+			sorular = soru_Service.listeleSoruByKategori(sinav.getKategori().getKategori_id());
+			logger.info(sinav.getKategori().getKategori_ad() + " kategorisindeki sorular listelendi.");
 
-		List<Klasik> klasikSorular = null;
-		klasikSorular = k_Service.listeleKlasikSorular();
-
-		HashSet<Kategori> kategoriler = new HashSet<Kategori>();
-		for (Klasik klasik : klasikSorular) {
-
-			kategoriler.add(klasik.getKategori());
+			return new ModelAndView("soruListele", "sorular", sorular)
+					.addObject("soruSayisi", sinav.getSorular().size());
 		}
 
+		
+	}
+
+	@RequestMapping(value = "listeleSoru", method = RequestMethod.POST)
+	public ModelAndView listeleSoru(@ModelAttribute Soru kriterler, HttpSession session) {
+
+	    List<Soru> sorular = soru_Service.listeleSorular();
+
+		HashSet<Kategori> kategoriler = new HashSet<Kategori>();
+		for (Soru soru: sorular) {
+
+			kategoriler.add(soru.getKategori());
+		}
+		
 		long kategori_id = kriterler.getKategori().getKategori_id();
-		String zorluk = kriterler.getK_zorluk();
+		String zorluk = kriterler.getZorluk();
 
 		if (kategori_id != 0 & !zorluk.equals("")) {
 
-			klasikSorular = k_Service.listeleKlasikByKategoriZorluk(kategori_id, zorluk);
+			sorular = soru_Service.listeleSoruByKategoriZorluk(kategori_id, zorluk);
 
 		}
 
 		else if (kategori_id == 0 & !zorluk.equals("")) {
 
-			klasikSorular = k_Service.listeleKlasikByZorluk(zorluk);
+			sorular = soru_Service.listeleSoruByZorluk(zorluk);
 
 		}
 
 		else if (kategori_id != 0 & zorluk.equals("")) {
 
-			klasikSorular = k_Service.listeleKlasikByKategori(kategori_id);
+			sorular = soru_Service.listeleSoruByKategori(kategori_id);
 
 		}
-
-		if (session.getAttribute("sinav") != null) {
+		
+		if(session.getAttribute("sinav")!=null) {
+			
 			Sinav sinav = (Sinav) session.getAttribute("sinav");
-			return new ModelAndView("formListele", "klasikSorular", klasikSorular).addObject("kategoriler", kategoriler)
-					.addObject("soruSayisi", sinav.getKlasikSorular().size());
+			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", kategoriler)
+					.addObject("soruSayisi", sinav.getSorular().size());
+		
+		}
 
-		} else {
-
-			return new ModelAndView("formListele", "klasikSorular", klasikSorular).addObject("kategoriler",
+		else {
+					
+			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler",
 					kategoriler);
 		}
 	}
-	
-	
 
-	@RequestMapping(value = "editKlasik", method = RequestMethod.GET)
-	public ModelAndView editKlasik(@ModelAttribute Klasik klasik, @RequestParam long k_id) {
+	@RequestMapping(value = "duzenleSoru", method = RequestMethod.GET)
+	public ModelAndView duzenleSoru(@ModelAttribute Soru soru, @RequestParam long soru_id) {
 
-		klasik = k_Service.listeleKlasikById(k_id);
+		soru = soru_Service.getirSoruById(soru_id);
 		List<Kategori> kategoriler = kategori_Service.kategoriListele();
-		return new ModelAndView("klasikForm", "klasik", klasik).addObject("kategoriler", kategoriler);
+		return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler);
 
 	}
 
-	@RequestMapping(value = "deleteKlasik", method = RequestMethod.GET)
-	public ModelAndView deleteKlasik(@RequestParam long k_id) {
+	@RequestMapping(value = "silSoru", method = RequestMethod.GET)
+	public ModelAndView silSoru(@RequestParam long soru_id) {
 
-		k_Service.silKlasikSoru(k_id);
-		logger.info(k_id + " id degerine sahip kayit silindi.");
-		return new ModelAndView("redirect:listeleKlasik");
+		soru_Service.silSoru(soru_id);
+		logger.info(soru_id + " id degerine sahip kayit silindi.");
+		return new ModelAndView("redirect:listeleSoru");
 	}
-
-	
 
 }

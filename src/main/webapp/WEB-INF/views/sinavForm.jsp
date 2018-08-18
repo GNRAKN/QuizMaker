@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>Klasik Soru Ekle</title>
+<title>Soru Ekle</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
@@ -56,7 +56,7 @@
 				</form:select>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block">Devam Et</button> 
-			<a href="listeleKlasik" class="btn btn-warning btn-block" role="button">İptal</a>
+			<a href="listeleSoru" class="btn btn-warning btn-block" role="button">İptal</a>
 		</form:form>
 
 

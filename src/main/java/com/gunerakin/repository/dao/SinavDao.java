@@ -13,4 +13,6 @@ public interface SinavDao {
 	public Sinav sinavListeleById(long sinav_id);
 	
 	public List<Sinav> sinavListele();
+	
+	public void sinavSil(long sinav_id);
 }

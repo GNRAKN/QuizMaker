@@ -42,4 +42,13 @@ public class SinavDaoImp implements SinavDao {
 		return sessionFactory.getCurrentSession().createQuery("From Sinav").list();
 	}
 
+	@Override
+	public void sinavSil(long sinav_id) {
+		
+		Sinav sinav=new Sinav();
+		sinav.setSinav_id(sinav_id);
+		sessionFactory.getCurrentSession().delete(sinav);
+		
+	}
+
 }

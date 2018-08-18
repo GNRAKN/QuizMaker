@@ -25,11 +25,14 @@
 
 			<div class="panel-body">
 
+				<div align="right">
+						<a href="listeleSoru">SoruEkle</a>
 
-				<c:if test="${empty sessionScope.sinav.klasikSorular}">
+					</div>
+				<c:if test="${empty sessionScope.sinav.sorular}">
 					<c:out value="Sınav için hiç soru eklemediniz !"></c:out>
 				</c:if>
-				<c:if test="${not empty sessionScope.sinav.klasikSorular}">
+				<c:if test="${not empty sessionScope.sinav.sorular}">
 
 					<form:form id="sinavOnizle" action="sinavKaydet" method="post"
 						modelAttribute="sinavAttribute">
@@ -63,19 +66,17 @@
 								class="form-control" id="kategori"
 								path="kategori" disabled="true"/>
 						</div>
-
-						<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
-						<a href="listeleKlasik" class="btn btn-warning btn-block"
-							role="button">İptal</a>
-					</form:form>
-
-
-
-
-					<table class="table table-hover table-bordered">
+						<hr>
+						<h3>Eklenen Sorular</h3>
+						<table class="table table-hover table-bordered">
 						<thead style="background-color: #F2F5A9;">
 							<tr>
 								<th>Soru</th>
+								<th>A</th>
+								<th>B</th>
+								<th>C</th>
+								<th>D</th>
+								<th>E</th>
 								<th>Cevap</th>
 								<th>Zorluk</th>
 								<th>Puan</th>
@@ -83,22 +84,48 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${sessionScope.sinav.klasikSorular}" var="s">
+							<c:forEach items="${sessionScope.sinav.sorular}" var="s">
 
 								<tr>
 
-									<th><c:out value="${s.value.k_soru}" /></th>
-									<th><c:out value="${s.value.k_dogru}" /></th>
-									<th><c:out value="${s.value.k_zorluk}" /></th>
-									<th><c:out value="${s.value.k_puan}" /></th>
+									<th><c:out value="${s.value.soru_kok}" /></th>
+									<th><c:out value="${s.value.soru_A}" /></th>
+									<th><c:out value="${s.value.soru_B}" /></th>
+									<th><c:out value="${s.value.soru_C}" /></th>
+									<th><c:out value="${s.value.soru_D}" /></th>
+									<th><c:out value="${s.value.soru_E}" /></th>
+									<th><c:out value="${s.value.soru_dogru}" /></th>
+									<th><c:out value="${s.value.zorluk}" /></th>
+									<th><c:out value="${s.value.soru_puan}" /></th>
 
-									<th><a href="soruKaldir?k_id=<c:out value="${s.key}"/>">Sil</a></th>
+									<th><a href="soruKaldir?soru_id=<c:out value="${s.key}"/>">Sil</a></th>
 
 
 								</tr>
 							</c:forEach>
+							
 						</tbody>
+						
 					</table>
+					
+							<c:forEach items="${sessionScope.sinav.sorular}" var="s">
+								
+								<c:set value="${toplam+s.value.soru_puan}" var="toplam"></c:set>
+							</c:forEach>
+						
+						<h1>${toplam} puanlık soru eklendi !</h1>
+						<button type="submit" class="btn btn-success btn-block">Kaydet</button>
+						
+						<a href="sinavListele" class="btn btn-danger btn-block"
+							role="button">İptal</a>
+					</form:form>
+					
+					
+					
+
+
+
+					
 
 				</c:if>
 			</div>

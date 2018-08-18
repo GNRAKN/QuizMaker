@@ -26,10 +26,10 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<div align="left">
-						<b>Soru Listele</b>
+						<b>Sınavlar</b>
 					</div>
 					<div align="right">
-						<a href="yeniKlasik">SoruEkle</a>
+						<a href="sinavOlustur">Sınav Oluştur</a>
 
 					</div>
 				</h3>
@@ -68,13 +68,13 @@
 									<th><c:out value="${s.kategori.kategori_ad}" /></th>
 									<th><c:out value="${s.sinav_yeri}" /></th>
 									<th><c:out value="${s.sinav_gozetmenAdi}" /></th>
-									<th><c:out value="${fn:length(s.klasikSorular)}" /></th>
+									<th><c:out value="${fn:length(s.sorular)}" /></th>
 										
 									
 									
-										<th><a href="editSinav?sinav_id=<c:out value='${s.sinav_id}'/>">Düzenle</a></th>
+										<th><a href="sinavGuncelle?sinav_id=<c:out value='${s.sinav_id}'/>">Düzenle</a></th>
 										<th><a
-											href="deleteSinav?sinav_id=<c:out value='${s.sinav_id}'/>">Sil</a></th>
+											href="sinavSil?sinav_id=<c:out value='${s.sinav_id}'/>">Sil</a></th>
 									
 									
 										<th><a href="sinavGetir?sinav_id=<c:out value='${s.sinav_id}'/>">Göster</a></th>

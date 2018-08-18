@@ -28,14 +28,15 @@
 						<b>Soru Listele</b>
 					</div>
 					<div align="right">
-						<a href="yeniKlasik">SoruEkle</a>
+						<a href="yeniSoru">SoruEkle</a>
 
 					</div>
 				</h3>
 			</div>
 			<div class="panel-body">
-				<form class="form-inline" action="listeleKlasik" method="post">
-					
+				<form class="form-inline" action="listeleSoru" method="post">
+
+					<c:if test="${empty sessionScope.sinav}">
 						<div class="form-group">
 							<select class="form-control" id="kategori.kategori_id"
 								name="kategori.kategori_id">
@@ -45,10 +46,11 @@
 								</c:forEach>
 							</select>
 						</div>
+					</c:if>
 					
-					
+
 					<div class="form-group">
-						<select class="form-control" id="k_zorluk" name="k_zorluk">
+						<select class="form-control" id="zorluk" name="zorluk">
 							<option value="">-- zorluk seçiniz --</option>
 
 							<option value="kolay">Kolay</option>
@@ -64,20 +66,34 @@
 				<c:if test="${not empty sessionScope.sinav}">
 					<span class="badge">Eklenen soru sayısı :<c:out
 							value="${soruSayisi}" /></span>
+
+
+					<form action="otoSinavOlustur" class="form-inline" method="post">
+
+						<div class="form-group">
+							<select class="form-control" id="zorluk" name="zorluk">
+								<option value="">-- zorluk seçiniz --</option>
+
+								<option value="kolay">Kolay</option>
+								<option value="orta">Orta</option>
+								<option value="zor">Zor</option>
+
+							</select>
+						</div>
+						
+					<input type="text" class="form-control" id="tamPuan" name="tamPuan"/>
+					
+					<button type="submit" class="btn btn-primary btn-block">Otomatik Sınav Oluştur</button>
+
+					</form>
+
 				</c:if>
 
 
-				<c:if test="${empty klasikSorular}">
+				<c:if test="${empty sorular}">
 					<c:out value="Kayıt yok"></c:out>
 				</c:if>
-				<c:if test="${not empty klasikSorular}">
-
-
-
-
-
-
-
+				<c:if test="${not empty sorular}">
 
 
 
@@ -87,6 +103,11 @@
 							<tr>
 								<th>Id</th>
 								<th>Soru</th>
+								<th>A</th>
+								<th>B</th>
+								<th>C</th>
+								<th>D</th>
+								<th>E</th>
 								<th>Cevap</th>
 								<th>Zorluk</th>
 								<th>Puan</th>
@@ -101,23 +122,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${klasikSorular}" var="ks">
+							<c:forEach items="${sorular}" var="s">
 								<tr>
-									<th><c:out value="${ks.k_id}" /></th>
-									<th><c:out value="${ks.k_soru}" /></th>
-									<th><c:out value="${ks.k_dogru}" /></th>
-									<th><c:out value="${ks.k_zorluk}" /></th>
-									<th><c:out value="${ks.k_puan}" /></th>
-									<th><c:out value="${ks.kategori.kategori_ad}" /></th>
+									<th><c:out value="${s.soru_id}" /></th>
+									<th><c:out value="${s.soru_kok}" /></th>
+									<th><c:out value="${s.soru_A}" /></th>
+									<th><c:out value="${s.soru_B}" /></th>
+									<th><c:out value="${s.soru_C}" /></th>
+									<th><c:out value="${s.soru_D}" /></th>
+									<th><c:out value="${s.soru_E}" /></th>
+									<th><c:out value="${s.soru_dogru}" /></th>
+									<th><c:out value="${s.zorluk}" /></th>
+									<th><c:out value="${s.soru_puan}" /></th>
+									<th><c:out value="${s.kategori.kategori_ad}" /></th>
 
 
 									<c:if test="${empty sessionScope.sinav}">
-										<th><a href="editKlasik?k_id=<c:out value='${ks.k_id}'/>">Düzenle</a></th>
 										<th><a
-											href="deleteKlasik?k_id=<c:out value='${ks.k_id}'/>">Sil</a></th>
+											href="duzenleSoru?soru_id=<c:out value='${s.soru_id}'/>">Düzenle</a></th>
+										<th><a
+											href="silSoru?soru_id=<c:out value='${s.soru_id}'/>">Sil</a></th>
 									</c:if>
 									<c:if test="${not empty sessionScope.sinav}">
-										<th><a href="soruEkle?k_id=<c:out value='${ks.k_id}'/>">Sınava
+										<th><a
+											href="soruEkle?soru_id=<c:out value='${s.soru_id}'/>">Sınava
 												Ekle</a></th>
 									</c:if>
 								</tr>

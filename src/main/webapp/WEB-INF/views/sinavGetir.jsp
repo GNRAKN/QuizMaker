@@ -28,17 +28,37 @@
 				<table class="table table-hover table-bordered">
 						
 							
-							<c:forEach items="${sinav.klasikSorular.values()}" var="ks">
+							<c:forEach items="${sinav.sorular.values()}" var="s">
+							<c:set var="soruNo" value="${soruNo+1}"></c:set>
 								<tr>
-									<th>(${ks.k_puan} puan)<c:out value="${ks.k_soru}" /></th>
-																			
-							
+									<th>${soruNo}) <c:out value="${s.soru_kok}" />(${s.soru_puan} puan)</th>
+									
+								</tr>
+								
+								<tr>
+									<th>A)<c:out value="${s.soru_A}" /></th>
+									
+								</tr>
+								<tr>
+									<th>B)<c:out value="${s.soru_B}" /></th>
+									
+								</tr>
+								<tr>
+									<th>C)<c:out value="${s.soru_C}" /></th>
+									
+								</tr>
+								<tr>
+									<th>D)<c:out value="${s.soru_D}" /></th>
+									
+								</tr>
+								<tr>
+									<th>E)<c:out value="${s.soru_E}" /></th>
 									
 								</tr>
 							</c:forEach>
 						
 					</table>
-					
+					<a class="btn btn-primary btn-block" href="/pdfExport?sinav_id=<c:out value="${sinav.sinav_id}"/>">PDF</a>
 					
 			</div>
 		</div>

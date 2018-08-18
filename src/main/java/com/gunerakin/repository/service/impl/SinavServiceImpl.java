@@ -44,4 +44,11 @@ public class SinavServiceImpl implements SinavDao, SinavService {
 		return sinavDao.sinavListele();
 	}
 
+	@Override
+	public void sinavSil(long sinav_id) {
+		
+		sinavDao.sinavSil(sinav_id);
+		
+	}
+
 }

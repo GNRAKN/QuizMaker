@@ -1,10 +1,9 @@
 eclipse.preferences.version=1
-encoding//src/main/java/com/gunerakin/controller/SinavController.java=UTF-8
+encoding//src/main/java/com/gunerakin/controller/ManuelSinavController.java=UTF-8
 encoding//src/main/java/com/gunerakin/controller/SoruBankasiController.java=UTF-8
-encoding//src/main/java/com/gunerakin/model/CoktanSecmeli.java=UTF-8
-encoding//src/main/java/com/gunerakin/model/Klasik.java=UTF-8
 encoding//src/main/java/com/gunerakin/model/Sinav.java=UTF-8
-encoding//src/main/webapp/WEB-INF/views/klasikForm.jsp=UTF-8
+encoding//src/main/java/com/gunerakin/model/Soru.java=UTF-8
 encoding//src/main/webapp/WEB-INF/views/sinavGetir.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/soruForm.jsp=UTF-8
 encoding//src/main/webapp/index.jsp=UTF-8
 separateDerivedEncodings=true

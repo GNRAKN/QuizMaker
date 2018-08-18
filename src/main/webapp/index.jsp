@@ -14,8 +14,8 @@
 <div class="container">
   <h2>QuizMaker</h2>
   <div class="list-group">
-    <a href="listeleKlasik" class="list-group-item">Soru Bankası<span class="badge">${count}</span></a>
-    <a href="sinavOlustur" class="list-group-item">Sınav Merkezi<span class="badge">12</span></a>
+    <a href="listeleSoru" class="list-group-item">Soru Bankası<span class="badge">${count}</span></a>
+    <a href="sinavListele" class="list-group-item">Sınav Merkezi<span class="badge">12</span></a>
     <a href="#" class="list-group-item">Sonuç Merkezi<span class="badge">12</span></a>
   </div>
 </div>
