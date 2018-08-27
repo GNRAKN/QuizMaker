@@ -21,14 +21,13 @@
 
 		<form:form id="SinavForm" action="sinavOlustur" method="post"
 			modelAttribute="sinav">
-			
+
 			<form:hidden path="sinav_id" value="${sinav.sinav_id}" />
 
 			<div class="form-group">
 
 				<form:label for="sinav_adi" path="sinav_adi">Sınav adı :</form:label>
-				<form:input class="form-control" id="sinav_adi"
-					path="sinav_adi"></form:input>
+				<form:input class="form-control" id="sinav_adi" path="sinav_adi"></form:input>
 			</div>
 
 			<div class="form-group">
@@ -44,18 +43,21 @@
 					path="sinav_gozetmenAdi" />
 			</div>
 
-			
+
 			<div class="form-group">
 				<form:label for="kategori" path="kategori">Kategori seçin :</form:label>
 				<form:select class="form-control" id="kategori" name="kategori"
 					path="kategori">
 					<c:forEach items="${kategoriler}" var="kategori">
-					<form:option value="${kategori.kategori_id}"><c:out value="${kategori.kategori_ad}"></c:out></form:option>
-					
+						<form:option value="${kategori.kategori_id}">
+							<c:out value="${kategori.kategori_ad}"></c:out>
+						</form:option>
+
 					</c:forEach>
 				</form:select>
 			</div>
-			<button type="submit" class="btn btn-primary btn-block">Devam Et</button> 
+			<button type="submit" class="btn btn-primary btn-block">Devam
+				Et</button>
 			<a href="listeleSoru" class="btn btn-warning btn-block" role="button">İptal</a>
 		</form:form>
 

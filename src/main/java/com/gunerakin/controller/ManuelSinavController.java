@@ -18,7 +18,6 @@ import com.gunerakin.repository.service.KategoriService;
 import com.gunerakin.repository.service.SinavService;
 import com.gunerakin.repository.service.SoruService;
 
-import net.bytebuddy.matcher.HasSuperTypeMatcher;
 
 @Controller
 public class ManuelSinavController {
@@ -94,7 +93,7 @@ public class ManuelSinavController {
 		}
 		session.removeAttribute("sinav");
 
-		return "sinavGetir";
+		return "redirect:sinavListele";
 	}
 
 	@RequestMapping(value = "sinavOnIzle", method = RequestMethod.GET)

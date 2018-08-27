@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,12 +15,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import org.jboss.logging.Logger;
 
 @Entity
 @Table(name = "SINAV")
+@SecondaryTable(name="Sinav_Yeri")
 public class Sinav {
 
 	private static final Logger logger = Logger.getLogger(Soru.class);
@@ -34,7 +37,10 @@ public class Sinav {
 	@JoinColumn(name = "kategori_id")
 	private Kategori kategori;
 
+	@Column(table="Sinav_Yeri")
 	private String sinav_yeri;
+	
+	
 	private String sinav_gozetmenAdi;
 
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

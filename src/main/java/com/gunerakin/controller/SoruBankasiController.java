@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gunerakin.model.Kategori;
 import com.gunerakin.model.Sinav;
 import com.gunerakin.model.Soru;
+import com.gunerakin.model.Tip;
 import com.gunerakin.repository.service.KategoriService;
 import com.gunerakin.repository.service.SoruService;
+import com.gunerakin.repository.service.TipService;
 
 @Controller
 public class SoruBankasiController {
@@ -29,27 +31,61 @@ public class SoruBankasiController {
 
 	@Inject
 	KategoriService kategori_Service;
+	
+	@Inject
+	TipService tip_Service;
 
 	@RequestMapping(value = "yeniSoru", method = RequestMethod.GET)
 	public ModelAndView yeniSoru(@ModelAttribute Soru soru) {
 
-		List<Kategori> kategoriler = kategori_Service.kategoriListele();
-
-		return new ModelAndView("soruForm", "kategoriler", kategoriler);
+		List<Kategori> kategorilerList = kategori_Service.kategoriListele();
+		HashMap<Long, String> kategoriler=new HashMap<Long, String>();
+		
+		for (Kategori kategori : kategorilerList) {
+			
+			kategoriler.put(kategori.getKategori_id(), kategori.getKategori_ad());
+		}
+		
+		
+		HashMap<Integer,String> tipler=new HashMap<Integer, String>();
+		List<Tip> tiplerList=tip_Service.tipleriGetir();
+	
+		for (Tip tip : tiplerList) {
+			tipler.put(tip.getTip_id(), tip.getTip_adi());
+		}
+		
+		HashSet<String> zorluklar=new HashSet<String>();
+		zorluklar.add("Kolay");
+		zorluklar.add("Orta");
+		zorluklar.add("Zor");
+		
+		HashSet<String> siklar=new HashSet<String>();
+		siklar.add("A");
+		siklar.add("B");
+		siklar.add("C");
+		siklar.add("D");
+		siklar.add("E");
+		
+		
+		return new ModelAndView("soruForm", "kategoriler", kategoriler).addObject("tipler",tipler).addObject("zorluklar",zorluklar).addObject("siklar", siklar);
 
 	}
 
 	@RequestMapping(value = "kaydetSoru", method = RequestMethod.POST)
-	public ModelAndView kaydetSoru(@ModelAttribute Soru soru, @RequestParam("kategori") Long kategori) {
+	public ModelAndView kaydetSoru(@ModelAttribute Soru soru, @RequestParam("kategori") Long kategori,@RequestParam("tip") int tip) {
 
 		if (soru.getSoru_id() == 0) {
-
+			
+	
 			soru.getKategori().setKategori_id(kategori);
+			soru.getTip().setTip_id(tip);
 			soru_Service.ekleSoru(soru);
 			logger.info("Yeni kayit veritabanina eklendi.");
 
 		} else {
+			
 			soru.getKategori().setKategori_id(kategori);
+			soru.getTip().setTip_id(tip);
 			soru_Service.guncelleSoru(soru);
 			logger.info(soru.getSoru_id() + " id degerine sahip kayit guncellendi.");
 		}
@@ -136,8 +172,49 @@ public class SoruBankasiController {
 	public ModelAndView duzenleSoru(@ModelAttribute Soru soru, @RequestParam long soru_id) {
 
 		soru = soru_Service.getirSoruById(soru_id);
-		List<Kategori> kategoriler = kategori_Service.kategoriListele();
-		return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler);
+		
+		List<Kategori> kategorilerList = kategori_Service.kategoriListele();		
+		List<Tip> tiplerList=tip_Service.tipleriGetir();
+		
+		HashMap<Integer,String> tipler = new HashMap<Integer, String>();
+		HashMap<Long, String> kategoriler=new HashMap<Long, String>();
+	
+		for (Tip tip : tiplerList) {
+			
+			tipler.put(tip.getTip_id(), tip.getTip_adi());
+		}
+		
+		for (Kategori kategori : kategorilerList) {
+			kategoriler.put(kategori.getKategori_id(),kategori.getKategori_ad());
+		}
+		
+		tipler.remove(soru.getTip().getTip_id());
+		kategoriler.remove(soru.getKategori().getKategori_id());
+		
+		
+		HashSet<String> zorluklar=new HashSet<String>();
+		zorluklar.add("Kolay");
+		zorluklar.add("Orta");
+		zorluklar.add("Zor");
+		zorluklar.remove(soru.getZorluk());
+		
+		if(soru.getTip().getTip_id()==2) {
+		HashSet<String> siklar=new HashSet<String>();
+		siklar.add("A");
+		siklar.add("B");
+		siklar.add("C");
+		siklar.add("D");
+		siklar.add("E");
+		
+		siklar.remove(soru.getSoru_dogru());
+		return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler).addObject("tipler",tipler).addObject("zorluklar",zorluklar).addObject("siklar",siklar);
+		}
+		
+		else {
+			
+			return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler).addObject("tipler",tipler).addObject("zorluklar",zorluklar);	
+		}
+		
 
 	}
 

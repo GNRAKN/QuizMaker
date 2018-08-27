@@ -1,18 +1,23 @@
 package com.gunerakin.model;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import org.jboss.logging.Logger;
 
+
 @Entity
 @Table(name = "Soru")
+@SecondaryTable(name="siklar")
 public class Soru implements Serializable {
 
 	private static final Logger logger = Logger.getLogger(Soru.class);
@@ -24,14 +29,28 @@ public class Soru implements Serializable {
 	private long soru_id;
 
 	private String soru_kok;
+	
+	
+	@Column(table="siklar")
 	private String soru_A;
+	
+	@Column(table="siklar")
 	private String soru_B;
+	
+	@Column(table="siklar")
 	private String soru_C;
+	
+	@Column(table="siklar")
 	private String soru_D;
+	
+	@Column(table="siklar")
 	private String soru_E;
+	
+	@ManyToOne
+	private Tip tip;
+	
 	private String soru_dogru;
-	private int soru_puan;
-
+	private int soru_puan;	
 	private String zorluk;
 	
 	@ManyToOne
@@ -39,11 +58,12 @@ public class Soru implements Serializable {
 	private Kategori kategori;
 
 	public Soru() {
-
+		
+		
 		logger.info("Soru Model Sınıfı");
 	}
 
-	public Soru(String soru_kok, String soru_A, String soru_B, String soru_C, String soru_D, String soru_E,
+	public Soru(String soru_kok, String soru_A, String soru_B, String soru_C, String soru_D, String soru_E, Tip tip,
 			String soru_dogru, int soru_puan, String zorluk, Kategori kategori) {
 		
 		this.soru_kok = soru_kok;
@@ -52,6 +72,7 @@ public class Soru implements Serializable {
 		this.soru_C = soru_C;
 		this.soru_D = soru_D;
 		this.soru_E = soru_E;
+		this.tip = tip;
 		this.soru_dogru = soru_dogru;
 		this.soru_puan = soru_puan;
 		this.zorluk = zorluk;
@@ -84,6 +105,10 @@ public class Soru implements Serializable {
 
 	public String getSoru_E() {
 		return soru_E;
+	}
+
+	public Tip getTip() {
+		return tip;
 	}
 
 	public String getSoru_dogru() {
@@ -130,6 +155,10 @@ public class Soru implements Serializable {
 		this.soru_E = soru_E;
 	}
 
+	public void setTip(Tip tip) {
+		this.tip = tip;
+	}
+
 	public void setSoru_dogru(String soru_dogru) {
 		this.soru_dogru = soru_dogru;
 	}
@@ -146,6 +175,9 @@ public class Soru implements Serializable {
 		this.kategori = kategori;
 	}
 
+	
+	
+	
 	
 	
 }

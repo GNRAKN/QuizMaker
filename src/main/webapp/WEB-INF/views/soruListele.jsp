@@ -47,7 +47,7 @@
 							</select>
 						</div>
 					</c:if>
-					
+
 
 					<div class="form-group">
 						<select class="form-control" id="zorluk" name="zorluk">
@@ -80,10 +80,12 @@
 
 							</select>
 						</div>
-						
-					<input type="text" class="form-control" id="tamPuan" name="tamPuan"/>
-					
-					<button type="submit" class="btn btn-primary btn-block">Otomatik Sınav Oluştur</button>
+
+						<input type="text" class="form-control" id="tamPuan"
+							name="tamPuan" />
+
+						<button type="submit" class="btn btn-primary btn-block">Otomatik
+							Sınav Oluştur</button>
 
 					</form>
 
@@ -101,17 +103,12 @@
 					<table class="table table-hover table-bordered">
 						<thead style="background-color: #F2F5A9;">
 							<tr>
-								<th>Id</th>
 								<th>Soru</th>
-								<th>A</th>
-								<th>B</th>
-								<th>C</th>
-								<th>D</th>
-								<th>E</th>
 								<th>Cevap</th>
 								<th>Zorluk</th>
 								<th>Puan</th>
-								<th>Kategori Id</th>
+								<th>Kategori</th>
+								<th>Tip</th>
 								<c:if test="${empty sessionScope.sinav}">
 									<th>Düzenle</th>
 									<th>Sil</th>
@@ -124,19 +121,14 @@
 						<tbody>
 							<c:forEach items="${sorular}" var="s">
 								<tr>
-									<th><c:out value="${s.soru_id}" /></th>
+
 									<th><c:out value="${s.soru_kok}" /></th>
-									<th><c:out value="${s.soru_A}" /></th>
-									<th><c:out value="${s.soru_B}" /></th>
-									<th><c:out value="${s.soru_C}" /></th>
-									<th><c:out value="${s.soru_D}" /></th>
-									<th><c:out value="${s.soru_E}" /></th>
 									<th><c:out value="${s.soru_dogru}" /></th>
 									<th><c:out value="${s.zorluk}" /></th>
 									<th><c:out value="${s.soru_puan}" /></th>
 									<th><c:out value="${s.kategori.kategori_ad}" /></th>
-
-
+									<th><c:out value="${s.tip.tip_adi}"/><c:if test="${s.tip.tip_id==2}"> - <a href="/" style="text-decoration: underline;">Şıkları gör</a></c:if></th>
+									
 									<c:if test="${empty sessionScope.sinav}">
 										<th><a
 											href="duzenleSoru?soru_id=<c:out value='${s.soru_id}'/>">Düzenle</a></th>
