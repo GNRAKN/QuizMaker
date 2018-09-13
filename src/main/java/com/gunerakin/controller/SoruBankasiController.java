@@ -100,14 +100,13 @@ public class SoruBankasiController {
 			
 			sorular= soru_Service.listeleSorular();
 			HashSet<Kategori> kategoriler = new HashSet<Kategori>();
-			HashMap<Long, Soru> sorularHashMap=new HashMap<Long, Soru>();
+
 			for (Soru soru : sorular) {
 
 				kategoriler.add(soru.getKategori());
-				sorularHashMap.put(soru.getSoru_id(), soru);
 			}
 			
-			return new ModelAndView("soruListele", "sorular", sorularHashMap).addObject("kategoriler",
+			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler",
 					kategoriler);
 		}
 		
@@ -116,16 +115,7 @@ public class SoruBankasiController {
 			sorular = soru_Service.listeleSoruByKategori(sinav.getKategori().getKategori_id());
 			logger.info(sinav.getKategori().getKategori_ad() + " kategorisindeki sorular listelendi.");
 
-			
-			HashMap<Long,Soru> sorularHashMap=new HashMap<Long, Soru>();
-			for (Soru soru : sorular) {
-				sorularHashMap.put(soru.getSoru_id(), soru);
-			}
-			
-			for (Soru soru : sinav.getSorular().values()) {
-				sorularHashMap.remove(soru.getSoru_id());
-			}
-			return new ModelAndView("soruListele", "sorular", sorularHashMap)
+			return new ModelAndView("soruListele", "sorular", sorular)
 					.addObject("soruSayisi", sinav.getSorular().size());
 		}
 
@@ -136,15 +126,10 @@ public class SoruBankasiController {
 	public ModelAndView listeleSoru(@ModelAttribute Soru kriterler, HttpSession session) {
 
 	    List<Soru> sorular = soru_Service.listeleSorular();
-	    
-	    HashMap<Long, Soru> sorularHashMap=new HashMap<Long, Soru>();
-	    
-	    
 
 		HashSet<Kategori> kategoriler = new HashSet<Kategori>();
 		for (Soru soru: sorular) {
 
-			
 			kategoriler.add(soru.getKategori());
 		}
 		
@@ -169,21 +154,17 @@ public class SoruBankasiController {
 
 		}
 		
-		for (Soru soru : sorular) {
-			sorularHashMap.put(soru.getSoru_id(),soru);
-		}
-		
 		if(session.getAttribute("sinav")!=null) {
 			
 			Sinav sinav = (Sinav) session.getAttribute("sinav");
-			return new ModelAndView("soruListele", "sorular", sorularHashMap).addObject("kategoriler", kategoriler)
+			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", kategoriler)
 					.addObject("soruSayisi", sinav.getSorular().size());
 		
 		}
 
 		else {
 					
-			return new ModelAndView("soruListele", "sorular", sorularHashMap).addObject("kategoriler",
+			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler",
 					kategoriler);
 		}
 	}
@@ -227,7 +208,7 @@ public class SoruBankasiController {
 		siklar.add("E");
 		
 		siklar.remove(soru.getSoru_dogru());
-		
+
 		return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler).addObject("tipler",tipler).addObject("zorluklar",zorluklar).addObject("siklar",siklar);
 		}
 		

@@ -35,6 +35,7 @@
 									
 								</tr>
 								
+<<<<<<< HEAD
 								<c:if test="${s.tip.tip_id==2}">
 								<tr>
 									<th>A)<c:out value="${s.soru_A}" /></th>
@@ -65,6 +66,28 @@
 								</tr>
 								
 								</c:if>
+=======
+								<tr>
+									<th>A)<c:out value="${s.soru_A}" /></th>
+									
+								</tr>
+								<tr>
+									<th>B)<c:out value="${s.soru_B}" /></th>
+									
+								</tr>
+								<tr>
+									<th>C)<c:out value="${s.soru_C}" /></th>
+									
+								</tr>
+								<tr>
+									<th>D)<c:out value="${s.soru_D}" /></th>
+									
+								</tr>
+								<tr>
+									<th>E)<c:out value="${s.soru_E}" /></th>
+									
+								</tr>
+>>>>>>> refs/remotes/origin/master
 							</c:forEach>
 						
 					</table>

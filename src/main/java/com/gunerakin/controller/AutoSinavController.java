@@ -19,6 +19,7 @@ public class AutoSinavController {
 	@Inject
 	SoruService soruService;
 
+
 	public HashMap<String, Double> katsayiDondur(String zorluk1, String zorluk2, String zorluk3) {
 
 		HashMap<String, Double> zorluklar = new HashMap<String, Double>();
@@ -98,8 +99,7 @@ public class AutoSinavController {
 		long kategori_id = sinav.getKategori().getKategori_id();
 		sinav.getSorular().clear();
 		sinav.getSorular().putAll(sinavOlustur(zorluk, kategori_id, tamPuan));
-		session.setAttribute("sinav", sinav);
-
-		return "redirect:sinavOnIzle";
+		return "redirect:sinavOnizle";
 	}
-}
+	}
+
