@@ -99,7 +99,9 @@ public class AutoSinavController {
 		long kategori_id = sinav.getKategori().getKategori_id();
 		sinav.getSorular().clear();
 		sinav.getSorular().putAll(sinavOlustur(zorluk, kategori_id, tamPuan));
+
 		return "redirect:sinavOnIzle";
+
 	}
 	}
 

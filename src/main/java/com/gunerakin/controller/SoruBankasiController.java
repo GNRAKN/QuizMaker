@@ -84,9 +84,9 @@ public class SoruBankasiController {
 
 		soru.getKategori().setKategori_id(kategori);
 		soru.getTip().setTip_id(tip);
-		
+
 		if (soru.getSoru_id() == 0) {
-			
+
 			soru_Service.ekleSoru(soru);
 			logger.info("Yeni kayit veritabanina eklendi.");
 
@@ -155,7 +155,7 @@ public class SoruBankasiController {
 	public ModelAndView listeleSoru(ModelAndView model, HttpSession session) {
 
 		List<Soru> sorular;
-		
+
 		if (session.getAttribute("sinav") == null) {
 			sorular = soru_Service.listeleSorular();
 			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", soruKategori());
@@ -205,9 +205,8 @@ public class SoruBankasiController {
 			sorular = soru_Service.listeleSorular();
 		}
 
-	
-			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", soruKategori());
-		
+		return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", soruKategori());
+
 	}
 
 }

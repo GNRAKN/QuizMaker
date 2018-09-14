@@ -37,6 +37,7 @@
 					<option selected value="${soru.tip.tip_id}">${soru.tip.tip_adi}</option>
 					</c:if>
 					<c:forEach items="${tipler}" var="t">
+<<<<<<< HEAD
 					<option value="${t.tip_id}">${t.tip_adi}</option>
 					</c:forEach>
 
@@ -52,6 +53,23 @@
 					</c:if>
 					<c:forEach items="${kategoriler}" var="kategori">
 						<option value="${kategori.kategori_id}">${kategori.kategori_ad}</option>
+=======
+					<option value="${t.key}">${t.value}</option>
+					</c:forEach>
+
+				</form:select>
+			</div>
+
+			<div class="form-group">
+				<form:label for="kategori" path="kategori">Kategori seçin :</form:label>
+				<form:select class="form-control" id="kategoriId" name="kategoriId"
+					path="kategori">
+					<c:if test="${not empty soru.kategori}">
+					<option selected value="${soru.kategori.kategori_id}">${soru.kategori.kategori_ad}</option>
+					</c:if>
+					<c:forEach items="${kategoriler}" var="kategori">
+						<option value="${kategori.key}">${kategori.value}</option>
+>>>>>>> refs/remotes/origin/master
 					</c:forEach>
 				</form:select>
 			</div>

@@ -158,6 +158,5 @@ public class ManuelSinavController {
 		session.setAttribute("sinav", sinav);
 
 		return "redirect:sinavOnIzle";
-	}
-
 }
+	}
