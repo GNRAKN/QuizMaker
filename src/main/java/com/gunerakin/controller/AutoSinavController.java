@@ -18,8 +18,7 @@ public class AutoSinavController {
 
 	@Inject
 	SoruService soruService;
-
-
+	
 	public HashMap<String, Double> katsayiDondur(String zorluk1, String zorluk2, String zorluk3) {
 
 		HashMap<String, Double> zorluklar = new HashMap<String, Double>();
@@ -43,9 +42,8 @@ public class AutoSinavController {
 		HashMap<String, Double> zorluklar = new HashMap<String, Double>();
 		
 		if (zorluk.equals("kolay")) {
-
 			zorluklar=katsayiDondur("kolay", "orta", "zor");
-
+			
 		} else if (zorluk.equals("orta")) {
 
 			zorluklar=katsayiDondur("orta", "kolay", "zor");
@@ -91,6 +89,7 @@ public class AutoSinavController {
 
 		return soruHashMap;
 	}
+	
 
 	@RequestMapping(value = "otoSinavOlustur", method = RequestMethod.POST)
 	public String otoSinavOlustur(@RequestParam int tamPuan, @RequestParam String zorluk, HttpSession session) {
