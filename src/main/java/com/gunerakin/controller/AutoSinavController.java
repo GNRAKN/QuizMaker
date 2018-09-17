@@ -30,7 +30,7 @@ public class AutoSinavController {
 
 	}
 
-	public HashMap<Long, Soru> sinavOlustur(String zorluk, long kategori_id, int tamPuan) {
+	public HashMap<Long, Soru> otoSinav(String zorluk, long kategori_id, int tamPuan) {
 
 		Random r;
 		int index;
@@ -97,7 +97,7 @@ public class AutoSinavController {
 		Sinav sinav = (Sinav) session.getAttribute("sinav");
 		long kategori_id = sinav.getKategori().getKategori_id();
 		sinav.getSorular().clear();
-		sinav.getSorular().putAll(sinavOlustur(zorluk, kategori_id, tamPuan));
+		sinav.getSorular().putAll(otoSinav(zorluk, kategori_id, tamPuan));
 
 		return "redirect:sinavOnIzle";
 

@@ -14,20 +14,12 @@
 <div class="container">
   <h2>QuizMaker</h2>
   <div class="list-group">
-<<<<<<< HEAD
+
 
     <a href="listeleSoru" class="list-group-item">Soru Bankası</a>
     <a href="sinavListele" class="list-group-item">Sınav Merkezi</a>
 
-=======
-<<<<<<< HEAD
-    <a href="listeleSoru" class="list-group-item">Soru Bankası</a>
-    <a href="sinavListele" class="list-group-item">Sınav Merkezi</a>
-=======
-    <a href="listeleSoru" class="list-group-item">Soru Bankası<span class="badge">${count}</span></a>
-    <a href="sinavListele" class="list-group-item">Sınav Merkezi<span class="badge">12</span></a>
->>>>>>> refs/remotes/origin/master
->>>>>>> refs/remotes/origin/master
+ 
     <a href="#" class="list-group-item">Sonuç Merkezi<span class="badge">12</span></a>
   </div>
 </div>
