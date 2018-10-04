@@ -113,7 +113,7 @@ public class SoruBankasiController {
 			}
 
 		}
-
+		
 		for (Kategori kategori : kategoriler) {
 			if (kategori.getKategori_id() == soru.getKategori().getKategori_id()) {
 				kategoriler.remove(kategori);
@@ -166,14 +166,21 @@ public class SoruBankasiController {
 			sorular = soru_Service.listeleSoruByKategori(sinav.getKategori().getKategori_id());
 			logger.info(sinav.getKategori().getKategori_ad() + " kategorisindeki sorular listelendi.");
 
-			for (Soru soruSession : sinav.getSorular().values()) {
-				for (Soru soruList : sorular) {
-					if (soruSession.getSoru_id() == soruList.getSoru_id()) {
-						sorular.remove(soruList);
-						break;
+			
+			
+			java.util.Iterator<Soru> itr;
+			
+			for (itr=sorular.iterator();itr.hasNext();) {
+				
+					if (sinav.getSorular().containsKey(itr.next().getSoru_id())) {
+					
+						itr.remove(); 
+						// iki for la map içerisinde arama yapmak yerine contains metodu kullanıldı.
+						//list içerisindeki nesneleri direk olarak silmeye çalışırken hata verdiği için iteratorler sildim.
+						
 					}
 				}
-			}
+			
 
 			return new ModelAndView("soruListele", "sorular", sorular).addObject("soruSayisi",
 					sinav.getSorular().size());
