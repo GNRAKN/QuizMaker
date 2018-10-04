@@ -73,7 +73,7 @@ public class SoruDaoImpl implements SoruDao {
 
 	@Override
 	public List<Kategori> listeleKategoriBySoru() {
-		return sessionFactory.getCurrentSession().createQuery("SELECT kategori FROM Soru").list();
+		return sessionFactory.getCurrentSession().createQuery("SELECT s.kategori FROM Soru s GROUP BY s.kategori").list();
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.gunerakin.controller;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -34,15 +35,10 @@ public class SoruBankasiController {
 	@Inject
 	TipService tip_Service;
 
-	public HashSet<Kategori> soruKategori() {
+	public List<Kategori> soruKategori() {
 
-		List<Soru> sorular = soru_Service.listeleSorular();
-		HashSet<Kategori> kategoriler = new HashSet<Kategori>();
-
-		for (Soru soru : sorular) {
-			kategoriler.add(soru.getKategori());
-		}
-		return kategoriler;
+		List<Kategori> kategoriler = soru_Service.listeleKategoriBySoru();
+		return kategoriler; // DAO tarafında Group By kullanılarak gruplama işlemi için for dan kurtulduk.
 	}
 
 	public HashSet<String> zorluklar() {
@@ -105,30 +101,35 @@ public class SoruBankasiController {
 		List<Kategori> kategoriler = kategori_Service.kategoriListele();
 		List<Tip> tipler = tip_Service.tipleriGetir();
 
-		for (Tip tip : tipler) {
+		Iterator<Tip> iterator1 = tipler.iterator();
+		while (iterator1.hasNext()) {
 
-			if (tip.getTip_id() == soru.getTip().getTip_id()) {
-				tipler.remove(tip);
+			if (iterator1.next().getTip_id() == (soru.getTip().getTip_id())) {
+
+				iterator1.remove();
 				break;
 			}
-
 		}
-		
-		for (Kategori kategori : kategoriler) {
-			if (kategori.getKategori_id() == soru.getKategori().getKategori_id()) {
-				kategoriler.remove(kategori);
+
+		Iterator<Kategori> iterator2 = kategoriler.iterator();
+		while (iterator2.hasNext()) {
+
+			if (iterator2.next().getKategori_id() == soru.getKategori().getKategori_id()) {
+
+				iterator2.remove();
 				break;
 			}
 
 		}
 
 		HashSet<String> zorluklar = zorluklar();
-		HashSet<String> siklar = siklar();
+		
 
 		zorluklar.remove(soru.getZorluk());
 
 		if (soru.getTip().getTip_id() == 2) {
-
+			
+			HashSet<String> siklar = siklar();
 			siklar.remove(soru.getSoru_dogru());
 
 			return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler)
@@ -166,21 +167,19 @@ public class SoruBankasiController {
 			sorular = soru_Service.listeleSoruByKategori(sinav.getKategori().getKategori_id());
 			logger.info(sinav.getKategori().getKategori_ad() + " kategorisindeki sorular listelendi.");
 
-			
-			
 			java.util.Iterator<Soru> itr;
-			
-			for (itr=sorular.iterator();itr.hasNext();) {
-				
-					if (sinav.getSorular().containsKey(itr.next().getSoru_id())) {
-					
-						itr.remove(); 
-						// iki for la map içerisinde arama yapmak yerine contains metodu kullanıldı.
-						//list içerisindeki nesneleri direk olarak silmeye çalışırken hata verdiği için iteratorler sildim.
-						
-					}
+
+			for (itr = sorular.iterator(); itr.hasNext();) {
+
+				if (sinav.getSorular().containsKey(itr.next().getSoru_id())) {
+
+					itr.remove();
+					// iki for la map içerisinde arama yapmak yerine contains metodu kullanıldı.
+					// list içerisindeki nesneleri direk olarak silmeye çalışırken hata verdiği için
+					// iteratorle sildim.
+
 				}
-			
+			}
 
 			return new ModelAndView("soruListele", "sorular", sorular).addObject("soruSayisi",
 					sinav.getSorular().size());
