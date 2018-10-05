@@ -1,7 +1,6 @@
 package com.gunerakin.controller;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -100,31 +99,15 @@ public class SoruBankasiController {
 
 		List<Kategori> kategoriler = kategori_Service.kategoriListele();
 		List<Tip> tipler = tip_Service.tipleriGetir();
-
-		Iterator<Tip> iterator1 = tipler.iterator();
-		while (iterator1.hasNext()) {
-
-			if (iterator1.next().getTip_id() == (soru.getTip().getTip_id())) {
-
-				iterator1.remove();
-				break;
-			}
-		}
-
-		Iterator<Kategori> iterator2 = kategoriler.iterator();
-		while (iterator2.hasNext()) {
-
-			if (iterator2.next().getKategori_id() == soru.getKategori().getKategori_id()) {
-
-				iterator2.remove();
-				break;
-			}
-
-		}
-
-		HashSet<String> zorluklar = zorluklar();
+		System.out.println(tipler.get(0).getTip_id()+"-"+tipler.get(1).getTip_id()+"-"+tipler.get(2).getTip_id());
 		
+		
+		//View'de soruForm/düzenle kısmında sorunun hali hazırdaki tip değeri de selectbox kısmına gönderildiği için liste içerisinden onu siliyoruz.
+		tipler.remove(soru.getTip().getTip_id()-1);
+		kategoriler.remove((int)soru.getKategori().getKategori_id()-1);
 
+		
+		HashSet<String> zorluklar = zorluklar();
 		zorluklar.remove(soru.getZorluk());
 
 		if (soru.getTip().getTip_id() == 2) {
@@ -133,7 +116,7 @@ public class SoruBankasiController {
 			siklar.remove(soru.getSoru_dogru());
 
 			return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler)
-					.addObject("tipler", tipler).addObject("zorluklar", zorluklar).addObject("siklar", siklar);
+					.addObject("tipler", tipler).addObject("zorluklar", zorluklar).addObject("siklar", siklar); //CoktanSecmeli sorularda sık devreye girdiği icin iki farklı return yapıyoruz.
 		}
 
 		else {
@@ -156,14 +139,15 @@ public class SoruBankasiController {
 	public ModelAndView listeleSoru(ModelAndView model, HttpSession session) {
 
 		List<Soru> sorular;
+		Sinav sinav = (Sinav) session.getAttribute("sinav");
 
-		if (session.getAttribute("sinav") == null) {
+		if (sinav == null) {
 			sorular = soru_Service.listeleSorular();
 			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", soruKategori());
 		}
 
 		else {
-			Sinav sinav = (Sinav) session.getAttribute("sinav");
+			
 			sorular = soru_Service.listeleSoruByKategori(sinav.getKategori().getKategori_id());
 			logger.info(sinav.getKategori().getKategori_ad() + " kategorisindeki sorular listelendi.");
 
@@ -175,8 +159,7 @@ public class SoruBankasiController {
 
 					itr.remove();
 					// iki for la map içerisinde arama yapmak yerine contains metodu kullanıldı.
-					// list içerisindeki nesneleri direk olarak silmeye çalışırken hata verdiği için
-					// iteratorle sildim.
+					
 
 				}
 			}
