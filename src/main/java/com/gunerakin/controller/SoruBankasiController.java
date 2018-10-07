@@ -1,7 +1,10 @@
 package com.gunerakin.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -38,6 +41,8 @@ public class SoruBankasiController {
 
 		List<Kategori> kategoriler = soru_Service.listeleKategoriBySoru();
 		return kategoriler; // DAO tarafında Group By kullanılarak gruplama işlemi için for dan kurtulduk.
+		
+		
 	}
 
 	public HashSet<String> zorluklar() {
@@ -171,31 +176,11 @@ public class SoruBankasiController {
 	}
 
 	@RequestMapping(value = "listeleSoru", method = RequestMethod.POST)
-	public ModelAndView listeleSoru(@ModelAttribute Soru kriterler, HttpSession session) {
-
-		List<Soru> sorular;
-
-		long kategori_id = kriterler.getKategori().getKategori_id();
-		String zorluk = kriterler.getZorluk();
-
-		if (kategori_id != 0 & !zorluk.isEmpty()) {
-			sorular = soru_Service.listeleSoruByKategoriZorluk(kategori_id, zorluk);
-
-		} else if (kategori_id == 0 & !zorluk.isEmpty()) {
-
-			sorular = soru_Service.listeleSoruByZorluk(zorluk);
-
-		} else if (kategori_id != 0 & zorluk.isEmpty()) {
-
-			sorular = soru_Service.listeleSoruByKategori(kategori_id);
-
-		} else {
-
-			sorular = soru_Service.listeleSorular();
-		}
-
-		return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", soruKategori());
+	public ModelAndView listeleSoru(@ModelAttribute Optional<Soru> kriterler, HttpSession session) {
+		return null;
 
 	}
+	
+	public void filtrele() {}
 
 }
