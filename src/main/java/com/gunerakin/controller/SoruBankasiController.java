@@ -1,5 +1,6 @@
 package com.gunerakin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -41,8 +42,7 @@ public class SoruBankasiController {
 
 		List<Kategori> kategoriler = soru_Service.listeleKategoriBySoru();
 		return kategoriler; // DAO tarafında Group By kullanılarak gruplama işlemi için for dan kurtulduk.
-		
-		
+
 	}
 
 	public HashSet<String> zorluklar() {
@@ -104,24 +104,33 @@ public class SoruBankasiController {
 
 		List<Kategori> kategoriler = kategori_Service.kategoriListele();
 		List<Tip> tipler = tip_Service.tipleriGetir();
-		System.out.println(tipler.get(0).getTip_id()+"-"+tipler.get(1).getTip_id()+"-"+tipler.get(2).getTip_id());
-		
-		
-		//View'de soruForm/düzenle kısmında sorunun hali hazırdaki tip değeri de selectbox kısmına gönderildiği için liste içerisinden onu siliyoruz.
-		tipler.remove(soru.getTip().getTip_id()-1);
-		kategoriler.remove((int)soru.getKategori().getKategori_id()-1);
+		System.out
+				.println(tipler.get(0).getTip_id() + "-" + tipler.get(1).getTip_id() + "-" + tipler.get(2).getTip_id());
 
-		
+		// View'de soruForm/düzenle kısmında sorunun hali hazırdaki tip değeri de
+		// selectbox kısmına gönderildiği için liste içerisinden onu siliyoruz.
+		tipler.remove(soru.getTip().getTip_id() - 1);
+		kategoriler.remove((int) soru.getKategori().getKategori_id() - 1);
+
 		HashSet<String> zorluklar = zorluklar();
 		zorluklar.remove(soru.getZorluk());
 
 		if (soru.getTip().getTip_id() == 2) {
-			
+
 			HashSet<String> siklar = siklar();
 			siklar.remove(soru.getSoru_dogru());
 
 			return new ModelAndView("soruForm", "soru", soru).addObject("kategoriler", kategoriler)
-					.addObject("tipler", tipler).addObject("zorluklar", zorluklar).addObject("siklar", siklar); //CoktanSecmeli sorularda sık devreye girdiği icin iki farklı return yapıyoruz.
+					.addObject("tipler", tipler).addObject("zorluklar", zorluklar).addObject("siklar", siklar); // CoktanSecmeli
+																												// sorularda
+																												// sık
+																												// devreye
+																												// girdiği
+																												// icin
+																												// iki
+																												// farklı
+																												// return
+																												// yapıyoruz.
 		}
 
 		else {
@@ -152,7 +161,7 @@ public class SoruBankasiController {
 		}
 
 		else {
-			
+
 			sorular = soru_Service.listeleSoruByKategori(sinav.getKategori().getKategori_id());
 			logger.info(sinav.getKategori().getKategori_ad() + " kategorisindeki sorular listelendi.");
 
@@ -164,7 +173,6 @@ public class SoruBankasiController {
 
 					itr.remove();
 					// iki for la map içerisinde arama yapmak yerine contains metodu kullanıldı.
-					
 
 				}
 			}
@@ -175,12 +183,34 @@ public class SoruBankasiController {
 
 	}
 
+	String sorgu="SELECT * FROM SORU WHERE ";
+	
+
 	@RequestMapping(value = "listeleSoru", method = RequestMethod.POST)
-	public ModelAndView listeleSoru(@ModelAttribute Optional<Soru> kriterler, HttpSession session) {
+	public ModelAndView listeleSoru(@ModelAttribute Soru kriterler, HttpSession session) {
+
+		System.out.println("girdik baba");
+		List kriterlerList = new ArrayList();
+		kriterlerList.add(kriterler.getZorluk());
+//		kriterlerList.add(kriterler.getTip().getTip_id());
+		kriterlerList.add(kriterler.getKategori().getKategori_id());
+
+		
+		for (Object object : kriterlerList) {
+
+			Optional<Object> kriterOpt = Optional.ofNullable(object);
+
+			kriterOpt.ifPresent(opt -> {
+				sorgu+=opt.toString();
+			});
+		}
+
+		System.out.println(sorgu);
 		return null;
 
 	}
-	
-	public void filtrele() {}
+
+	public void filtrele() {
+	}
 
 }

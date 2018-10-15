@@ -51,7 +51,18 @@
 							</select>
 						</div>
 					</c:if>
+					
+					
+						<!-- <div class="form-group">
+						<select class="form-control" id="tip" name="tip.tip_id">
+							<option value="">-- tip seçiniz --</option>
 
+							<option value="klasik">Klasik</option>
+							<option value="dogruyanlis">Doğru-Yanlış</option>
+							<option value="coktansecmeli">Çoktan Seçmeli</option>
+
+						</select>
+					</div> -->
 
 					<div class="form-group">
 						<select class="form-control" id="zorluk" name="zorluk">

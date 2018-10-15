@@ -13,16 +13,18 @@
 		<springframework-version>5.0.7.RELEASE</springframework-version>
 		<hibernate-version>5.3.2.Final</hibernate-version>
 		<mysql-version>8.0.11</mysql-version>
-		<org.aspectj-version>1.9.1</org.aspectj-version>
-		<org.slf4j-version>1.7.25</org.slf4j-version>
-
+		<inject-version>1</inject-version>
+		<commons-login-version>1.2</commons-login-version>
 		<itext.version>2.1.7</itext.version>
 		<poi.version>3.15</poi.version>
-		<jxl.version>2.6.12</jxl.version>
+		<servlet-api-version>2.5</servlet-api-version>
+	    <jsp-api-version>2.1</jsp-api-version>
+	    <javax-jstl-version>1.2</javax-jstl-version>
+	    <jstl-version>1.2</jstl-version>
 	</properties>
 	<dependencies>
 
-		<!-- itext -->
+		<!-- PDF VIEW KUTUPHANELERI -->
 
 		<dependency>
 			<groupId>com.lowagie</groupId>
@@ -30,9 +32,7 @@
 			<version>${itext.version}</version>
 		</dependency>
 
-		<!-- apache poi -->
 
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
@@ -45,14 +45,9 @@
 			<version>${poi.version}</version>
 		</dependency>
 
-		<!-- jexcel api -->
+		<!-- PDF VIEW KUTUPHANELERI -->
 
-		<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
-		<dependency>
-			<groupId>net.sourceforge.jexcelapi</groupId>
-			<artifactId>jxl</artifactId>
-			<version>${jxl.version}</version>
-		</dependency>
+
 
 		<!-- SPRING -->
 		<dependency>
@@ -81,11 +76,7 @@
 			<version>${springframework-version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${springframework-version}</version>
-		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -113,7 +104,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-tools</artifactId>
-			<version>5.3.1.Final</version>
+			<version>${hibernate-version}</version>
 		</dependency>
 
 		<dependency>
@@ -144,110 +135,45 @@
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
+			<version>${commons-login-version}</version>
 		</dependency>
 
 
-
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>
-
-		<!-- Logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
-		</dependency>
 
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
-			<version>1</version>
+			<version>${inject-version}</version>
 		</dependency>
 
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<version>${servlet-api-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
+			<version>${jsp-api-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-
-		<!-- Test -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.2.1-b03</version>
-			<scope>provided</scope>
+			<version>${javax-jstl-version}</version>
 		</dependency>
 
 		<!-- JSTL dependency -->
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${jstl-version}</version>
 		</dependency>
-		
-		
+
+
 	</dependencies>
 	<build>
 		<plugins>
