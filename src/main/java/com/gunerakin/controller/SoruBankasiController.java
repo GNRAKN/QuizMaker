@@ -189,21 +189,30 @@ public class SoruBankasiController {
 	@RequestMapping(value = "listeleSoru", method = RequestMethod.POST)
 	public ModelAndView listeleSoru(@ModelAttribute Soru kriterler, HttpSession session) {
 
-		System.out.println("girdik baba");
-		List kriterlerList = new ArrayList();
-		kriterlerList.add(kriterler.getZorluk());
+
+		HashMap<String, String> kriterlerList = new HashMap<>();
+		kriterlerList.put("zorluk",kriterler.getZorluk());
 //		kriterlerList.add(kriterler.getTip().getTip_id());
-		kriterlerList.add(kriterler.getKategori().getKategori_id());
-
+		kriterlerList.put("kategori",kriterler.getKategori().getKategori_ad());
 		
-		for (Object object : kriterlerList) {
-
-			Optional<Object> kriterOpt = Optional.ofNullable(object);
-
-			kriterOpt.ifPresent(opt -> {
-				sorgu+=opt.toString();
-			});
-		}
+		//int degerler bos oldugu zaman null degil 0 doner. Bu nedenle ofNullable kontrolunden sonuc alınamaz.Bunu düzelt !
+		
+			for (String obje : kriterlerList.keySet()) {
+				
+				
+				Optional<String> kriterOpt = Optional.ofNullable(obje);
+				
+				kriterOpt.ifPresent(opt -> {
+					
+					
+						
+						sorgu+=opt+"-"+kriterlerList.get(obje);
+					
+					
+				});
+			}
+			
+		
 
 		System.out.println(sorgu);
 		return null;
