@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "KATEGORI")
 public class Kategori implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

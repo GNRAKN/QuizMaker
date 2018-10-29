@@ -104,8 +104,7 @@ public class SoruBankasiController {
 
 		List<Kategori> kategoriler = kategori_Service.kategoriListele();
 		List<Tip> tipler = tip_Service.tipleriGetir();
-		System.out
-				.println(tipler.get(0).getTip_id() + "-" + tipler.get(1).getTip_id() + "-" + tipler.get(2).getTip_id());
+		
 
 		// View'de soruForm/düzenle kısmında sorunun hali hazırdaki tip değeri de
 		// selectbox kısmına gönderildiği için liste içerisinden onu siliyoruz.
@@ -190,7 +189,7 @@ public class SoruBankasiController {
 	public ModelAndView listeleSoru(@ModelAttribute Soru kriterler, HttpSession session) {
 
 
-		HashMap<String, String> kriterlerList = new HashMap<>();
+		HashMap<String, String> kriterlerList = new HashMap<String, String>();
 		kriterlerList.put("zorluk",kriterler.getZorluk());
 //		kriterlerList.add(kriterler.getTip().getTip_id());
 		kriterlerList.put("kategori",kriterler.getKategori().getKategori_ad());
@@ -219,7 +218,6 @@ public class SoruBankasiController {
 
 	}
 
-	public void filtrele() {
-	}
+	
 
 }

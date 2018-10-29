@@ -134,7 +134,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${sorular}" var="s">
+							<c:forEach items="${sorular}" var="s" varStatus="e">
 								<tr>
 
 									<th><c:out value="${s.soru_kok}" /></th>
@@ -143,12 +143,45 @@
 									<th><c:out value="${s.soru_puan}" /></th>
 									<th><c:out value="${s.kategori.kategori_ad}" /></th>
 									<th><c:out value="${s.tip.tip_adi}" /> <c:if
-											test="${s.tip.tip_id==2}"> - <button
-												onclick="siklariGoster(${s.soru_id});">Şıkları
-												Göster</button>
-											<div style="display: none;" id="${s.soru_id}">A)${s.soru_A}
-												, B)${s.soru_B} , C)${s.soru_C} , D)${s.soru_D} ,
-												E)${s.soru_E}</div>
+											test="${s.tip.tip_id==2}">
+												<th><button data-toggle="modal"
+											data-target="#myModal${e.index}">Şıkları Göster</button></th>
+											
+												
+												
+												<div class="modal" id="myModal${e.index}" role="dialog">
+									<div class="modal-dialog">
+
+
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">${i.urun.urun_adi}</h4>
+											</div>
+											<div class="modal-body">
+												
+												<p>Soru : : ${s.soru_kok}</p>
+												<hr>
+												<p>A)${s.soru_A}</p>
+												<p>B)${s.soru_B}</p>
+												<p>C)${s.soru_C}</p>
+												<p>D)${s.soru_D}</p>
+												<p>E)${s.soru_E}</p>
+
+
+
+
+
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">Kapat</button>
+												
+											</div>
+										</div>
+
+									</div>
+								</div>
 										</c:if></th>
 
 									<c:if test="${empty sessionScope.sinav}">

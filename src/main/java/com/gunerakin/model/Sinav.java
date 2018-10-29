@@ -48,7 +48,7 @@ public class Sinav {
 			@JoinColumn(name = "Soru_Id") })
 	@MapKey(name = "soru_id") // bunu kullanmazsak cokacok iliskiden dogan tabloya HashMap key'ini insert
 							// ediyor.
-	private Map<Long, Soru> sorular = new HashMap<Long, Soru>();
+	private Map<Long, Soru> sorular;
 
 	public Sinav() {
 

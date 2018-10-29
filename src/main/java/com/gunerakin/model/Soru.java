@@ -54,7 +54,7 @@ public class Soru implements Serializable {
 	private String zorluk;
 	
 	@ManyToOne
-	@JoinColumn(name = "kategori_id")
+	@JoinColumn(name = "kategori_id") //mesela bu kategori on yuze gelirken adi ozelligine id yi atiyodu
 	private Kategori kategori;
 
 	public Soru() {
