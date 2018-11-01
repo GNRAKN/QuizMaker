@@ -79,6 +79,12 @@ public class SoruServiceImpl implements SoruService {
 		return soru_DAO.count();
 	}
 
+	@Override
+	public List<Soru> readQuestion10(int number) {
+
+		return soru_DAO.readQuestion10(number);
+	}
+
 	
 
 }

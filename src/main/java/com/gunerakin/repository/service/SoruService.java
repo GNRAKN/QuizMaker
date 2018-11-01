@@ -26,5 +26,7 @@ public interface SoruService {
 	public List<Kategori> listeleKategoriBySoru();
 
 	public long count();
+	
+	public List<Soru> readQuestion10(int number);
 
 }

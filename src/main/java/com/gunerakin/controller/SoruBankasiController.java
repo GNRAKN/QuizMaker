@@ -1,6 +1,6 @@
 package com.gunerakin.controller;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -157,6 +157,10 @@ public class SoruBankasiController {
 		if (sinav == null) {
 			sorular = soru_Service.listeleSorular();
 			return new ModelAndView("soruListele", "sorular", sorular).addObject("kategoriler", soruKategori());
+			
+//			sorular=soru_Service.readQuestion10(0);
+//			System.out.println(sorular.size());
+//			return new ModelAndView("soruListele","sorular",sorular).addObject("kategoriler", soruKategori());
 		}
 
 		else {
@@ -191,7 +195,7 @@ public class SoruBankasiController {
 
 		HashMap<String, String> kriterlerList = new HashMap<String, String>();
 		kriterlerList.put("zorluk",kriterler.getZorluk());
-//		kriterlerList.add(kriterler.getTip().getTip_id());
+		//kriterlerList.add(kriterler.getTip().getTip_id());
 		kriterlerList.put("kategori",kriterler.getKategori().getKategori_ad());
 		
 		//int degerler bos oldugu zaman null degil 0 doner. Bu nedenle ofNullable kontrolunden sonuc alınamaz.Bunu düzelt !

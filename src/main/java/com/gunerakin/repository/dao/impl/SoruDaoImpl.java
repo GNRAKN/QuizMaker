@@ -53,34 +53,45 @@ public class SoruDaoImpl implements SoruDao {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Soru> listeleSoruByKategoriZorluk(long kategori_id, String zorluk) {
 		return sessionFactory.getCurrentSession().createQuery("from Soru as soru where soru.kategori='"
 				+ kategori_id + "' and soru.zorluk='" + zorluk + "'").list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Soru> listeleSoruByZorluk(String zorluk) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("from Soru as soru where soru.zorluk='" + zorluk + "'").list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Soru> listeleSoruByKategori(long kategori_id) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("from Soru as soru where soru.kategori='" + kategori_id + "'").list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Kategori> listeleKategoriBySoru() {
 		return sessionFactory.getCurrentSession().createQuery("SELECT s.kategori FROM Soru s GROUP BY s.kategori").list();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public long count() {
 		return (Long) sessionFactory.getCurrentSession().createCriteria("Soru").setProjection(Projections.rowCount())
 				.uniqueResult();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Soru> readQuestion10(int number) {
+		
+		return sessionFactory.getCurrentSession().createQuery("FROM Soru s where s.soru_id > "+number+"").list();//bu sekilde olmaz veritabanında id ler 1 den baslamıyor olabilir !	}
 
 	
 
